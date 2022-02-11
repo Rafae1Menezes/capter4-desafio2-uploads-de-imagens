@@ -24,7 +24,7 @@ export default function Home(): JSX.Element {
   );
 
   const formattedData = useMemo(() => {
-    return data?.pages[0].data.data;
+    return data?.pages.map(page => page.data.data).flat();
   }, [data]);
 
   if (isLoading) return <Loading />;
@@ -37,9 +37,8 @@ export default function Home(): JSX.Element {
 
       <Box maxW={1120} px={20} mx="auto" my={20}>
         <CardList cards={formattedData} />
-        {/* TODO RENDER LOAD MORE BUTTON IF DATA HAS NEXT PAGE */}
         {hasNextPage && (
-          <Button onClick={() => fetchNextPage()}>
+          <Button onClick={() => fetchNextPage()} mt="40px">
             {isFetchingNextPage ? 'Carregando...' : 'Carregar mais'}
           </Button>
         )}
